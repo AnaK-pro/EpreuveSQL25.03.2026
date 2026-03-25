@@ -1,6 +1,6 @@
 CREATE PROCEDURE [dbo].[Sp_LoginUser]
     @Email    VARCHAR(320),
-    @Password VARCHAR(32)
+    @Password VARCHAR(64)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -18,7 +18,7 @@ BEGIN
         RETURN;
     END
 
-    DECLARE @HashedPassword VARCHAR(32) = CONVERT(VARCHAR(32), HASHBYTES('SHA2_32', @Password + CAST(@Salt AS VARCHAR(36))), 2);
+    DECLARE @HashedPassword VARCHAR(64) = CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', @Password + CAST(@Salt AS VARCHAR(36))), 2);
 
     IF @HashedPassword <> @StoredHash
     BEGIN
