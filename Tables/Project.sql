@@ -1,7 +1,7 @@
 CREATE TABLE [dbo].[Project]
 ( [ProjectId] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
   [Name] VARCHAR(256) NOT NULL,
-  [Description] VARCHAR(MAX) NOT NULL,
+  [Description] NVARCHAR(MAX) NOT NULL,
   [CreationDate] DATETIME NOT NULL DEFAULT GETDATE(),
   CONSTRAINT [PK_Project] PRIMARY KEY ([ProjectId])
 )

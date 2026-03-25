@@ -1,7 +1,7 @@
 CREATE PROCEDURE [dbo].[Sp_CreateProject]
     @ManagerId   UNIQUEIDENTIFIER,
-    @Name        VARCHAR(64),
-    @Description NVARCHAR(MAX) = NULL
+    @Name        VARCHAR(256),
+    @Description NVARCHAR(MAX)
 AS
 BEGIN
     SET NOCOUNT ON;

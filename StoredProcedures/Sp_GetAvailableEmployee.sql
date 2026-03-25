@@ -5,9 +5,9 @@ BEGIN
 
     SELECT
         e.[EmployeeId],
-        e.[Firstname],
-        e.[Lastname],
-        e.[Hiredate],
+        e.[FirstName],
+        e.[LastName],
+        e.[HireDate],
         e.[IsProjectManager]
     FROM [dbo].[Employee] e
     WHERE NOT EXISTS (
@@ -16,5 +16,5 @@ BEGIN
         WHERE tp.[EmployeeId] = e.[EmployeeId]
           AND (tp.[EndDate] IS NULL OR tp.[EndDate] >= GETDATE())
     )
-    ORDER BY e.[Lastname], e.[Firstname];
+    ORDER BY e.[LastName], e.[FirstName];
 END

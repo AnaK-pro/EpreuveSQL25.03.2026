@@ -18,7 +18,7 @@ BEGIN
         RETURN;
     END
 
-    DECLARE @HashedPassword VARBINARY(32) = HASHBYTES('SHA2_256', @Password + CAST(@Salt AS VARCHAR(36)));
+    DECLARE @HashedPassword VARBINARY(32) = HASHBYTES('SHA2_256', CAST(@Password AS NVARCHAR(64)) + CAST(@Salt AS NVARCHAR(36)));
 
     IF @HashedPassword <> @StoredHash
     BEGIN

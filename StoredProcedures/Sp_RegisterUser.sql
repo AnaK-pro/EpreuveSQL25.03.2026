@@ -1,9 +1,6 @@
-CREATE PROCEDURE [dbo].[sp_RegisterUser]
-    @Firstname  VARCHAR(64),
-    @Lastname   VARCHAR(64),
-    @Hiredate   DATE,
+CREATE PROCEDURE [dbo].[Sp_RegisterUser]
     @Email      VARCHAR(320),
-    @Password   VARCHAR(32)
+    @Password   VARBINARY(32)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -14,19 +11,12 @@ BEGIN
         RETURN;
     END
 
-    DECLARE @NewEmployeeId UNIQUEIDENTIFIER = NEWID();
-    DECLARE @NewUserId     UNIQUEIDENTIFIER = NEWID();
-    DECLARE @Salt          UNIQUEIDENTIFIER = NEWID();
-    DECLARE @HashedPassword VARCHAR(256)    = CONVERT(VARCHAR(256), HASHBYTES('SHA2_256', @Password + CAST(@Salt AS VARCHAR(36))), 2);
-
-    INSERT INTO [dbo].[Employee] ([EmployeeId], [Firstname], [Lastname], [Hiredate], [IsProjectManager])
-    VALUES (@NewEmployeeId, @Firstname, @Lastname, @Hiredate, 0);
+    DECLARE @NewUserId      UNIQUEIDENTIFIER = NEWID();
+    DECLARE @Salt           UNIQUEIDENTIFIER = NEWID();
+    DECLARE @HashedPassword VARBINARY(32)    = HASHBYTES('SHA2_256', CAST(@Password AS NVARCHAR(64)) + CAST(@Salt AS NVARCHAR(36)));
 
     INSERT INTO [dbo].[User] ([UserId], [Email], [Password], [Salt])
     VALUES (@NewUserId, @Email, @HashedPassword, @Salt);
 
-    INSERT INTO [dbo].[Link] ([UserId], [EmployeeId])
-    VALUES (@NewUserId, @NewEmployeeId);
-
-    SELECT @NewUserId AS [UserId], @NewEmployeeId AS [EmployeeId];
+    SELECT @NewUserId AS [UserId];
 END

@@ -24,8 +24,8 @@ BEGIN
         p.[Content],
         p.[SendDate],
         e.[EmployeeId],
-        e.[Firstname],
-        e.[Lastname]
+        e.[FirstName],
+        e.[LastName]
     FROM [dbo].[Post] p
     INNER JOIN [dbo].[Concern] c  ON c.[PostId]     = p.[PostId]
     INNER JOIN [dbo].[Write]   w  ON w.[PostId]     = p.[PostId]

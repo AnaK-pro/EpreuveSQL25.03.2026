@@ -6,8 +6,8 @@ BEGIN
 
     SELECT
         e.[EmployeeId],
-        e.[Firstname],
-        e.[Lastname],
+        e.[FirstName],
+        e.[LastName],
         e.[IsProjectManager]
     FROM [dbo].[Employee] e
     WHERE e.[EmployeeId] = @EmployeeId;
