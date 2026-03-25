@@ -1,0 +1,5 @@
+ALTER TABLE [dbo].[Link]
+    ADD CONSTRAINT [FK_Link_User]
+    FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([UserId])
+    ON DELETE CASCADE 
+    ON UPDATE NO ACTION
