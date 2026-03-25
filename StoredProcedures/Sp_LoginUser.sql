@@ -1,12 +1,12 @@
 CREATE PROCEDURE [dbo].[Sp_LoginUser]
     @Email    VARCHAR(320),
-    @Password VARCHAR(64)
+    @Password VARBINARY(32)
 AS
 BEGIN
     SET NOCOUNT ON;
 
     DECLARE @Salt          UNIQUEIDENTIFIER;
-    DECLARE @StoredHash    VARCHAR(32);
+    DECLARE @StoredHash    VARBINARY(32);
 
     SELECT @Salt = [Salt], @StoredHash = [Password]
     FROM [dbo].[User]
@@ -18,7 +18,7 @@ BEGIN
         RETURN;
     END
 
-    DECLARE @HashedPassword VARCHAR(64) = CONVERT(VARCHAR(64), HASHBYTES('SHA2_256', @Password + CAST(@Salt AS VARCHAR(36))), 2);
+    DECLARE @HashedPassword VARBINARY(32) = HASHBYTES('SHA2_256', @Password + CAST(@Salt AS VARCHAR(36)));
 
     IF @HashedPassword <> @StoredHash
     BEGIN
@@ -30,8 +30,8 @@ BEGIN
         u.[UserId],
         u.[Email],
         e.[EmployeeId],
-        e.[Firstname],
-        e.[Lastname],
+        e.[FirstName],
+        e.[LastName],
         e.[IsProjectManager]
     FROM [dbo].[User] u
     INNER JOIN [dbo].[Link] l ON l.[UserId] = u.[UserId]
